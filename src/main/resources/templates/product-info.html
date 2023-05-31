@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link style="">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:inline="text">
+    <h1>Вітаю на практиці!</h1> <hr>
+    <h3>Інформація про товар</h3>
+    <b>Назва товару: </b> [[${product.title}]] <br>
+    <b>Опис товару: </b> [[${product.description}]] <br>
+    <b>Ціна товару: </b> [[${product.price}]] <br>
+    <b>Місто: </b> [[${product.town}]] <br>
+    <b>Автор: </b> [[${product.author}]] <br> <br>
+    <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post">
+        <input type="submit" value="Видалити товар">
+    </form>
+
+</body>
+</html>
