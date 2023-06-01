@@ -8,6 +8,11 @@
 <body th:inline="text">
     <h1>Вітаю на практиці!</h1> <hr>
     <h3>Інформація про товар</h3>
+
+<div th:each="image : ${images}">
+    <img th:src="@{/images/{id}(id=${image.id})}" height="100">
+</div>
+
     <b>Назва товару: </b> [[${product.title}]] <br>
     <b>Опис товару: </b> [[${product.description}]] <br>
     <b>Ціна товару: </b> [[${product.price}]] <br>

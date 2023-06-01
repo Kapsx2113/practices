@@ -4,9 +4,12 @@ import com.sigua.practices.model.Image;
 import com.sigua.practices.model.Product;
 import com.sigua.practices.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -30,10 +33,11 @@ public class ProductService {
         image1.setPreviewImage(true);
         product.addImageToProduct(image1);
      } else {
-
-//         image1 = toImageEntity(file1);
-//         image1.setPreviewImage(true);
-//         product.addImageToProduct(image1);
+        File imageFile = new File("src/main/resources/imageNF.png");
+        MultipartFile multipartFile = convertToMultipartFile (imageFile);
+        image1 = toImageEntity(multipartFile);
+        image1.setPreviewImage(true);
+        product.addImageToProduct(image1);
      }
         if(file2.getSize() !=0 ){
             image2 = toImageEntity(file2);
@@ -46,6 +50,17 @@ public class ProductService {
         Product productFromDb = productRepository.save(product);
         productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());
         productRepository.save(product);
+    }
+
+    //Convert image 2 Multipartfile
+    private MultipartFile convertToMultipartFile(File imageFile) {
+        MockMultipartFile mockMultipartFile;
+       try (FileInputStream input = new FileInputStream(imageFile)){
+            mockMultipartFile = new MockMultipartFile("my_file", imageFile.getName(),"image/jpeg", input );
+       } catch (IOException e){
+           throw new RuntimeException(e);
+       }
+       return mockMultipartFile;
     }
 
     private Image toImageEntity(MultipartFile file) {
