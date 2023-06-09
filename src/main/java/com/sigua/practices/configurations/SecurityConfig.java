@@ -19,7 +19,7 @@ public class SecurityConfig {
 private final CustomUserDetailsService customUserDetailsService;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+    http.csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/product/**", "/images/**", "/registration").permitAll()
                         .anyRequest().authenticated()

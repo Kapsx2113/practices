@@ -17,10 +17,12 @@
     <b>Опис товару: </b> [[${product.description}]] <br>
     <b>Ціна товару: </b> [[${product.price}]] <br>
     <b>Місто: </b> [[${product.town}]] <br>
-    <b>Автор: </b> [[${product.author}]] <br> <br>
-    <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post">
-        <input type="submit" value="Видалити товар">
-    </form>
+    <b>Автор: </b> [[${product.user.name}]] <br> <br>
+    <div th:if="${user.email}">
+        <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post">
+            <input type="submit" value="Видалити товар">
+        </form>
+    </div>
 
 </body>
 </html>

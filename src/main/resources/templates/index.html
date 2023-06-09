@@ -7,30 +7,53 @@
 <body>
 
     <h1>Вітаю на практиці!</h1><hr><br>
+
+    <div th:if="${user.email}">
+        <form action="/logout" method="post">
+            <input type="submit" value="Вийти">
+        </form>
+
+    </div>
+    <div th:unless="${user.email}">
+        <a href="/login"> Увійти</a>
+    </div>
+
+    <hr>
+
     <a href="/login">Увійти</a>
+
     <form th:action="@{/}" method="get">
         Пошук товару по назві: <input type="text" name="title">
         <input type="submit" value="Пошук">
     </form>
+<hr>
+<!--  якщо список пустий (товар)  -->
+    <div th:if="${productList.isEmpty}">
+        <div> <h3> Товар відсутній </h3> </div>
 
-    <div th:each="product:${productList}">
-        <span th:text="${product.title}"></span>
-        <span th:text="${product.price}"></span><b> грн.</b>
-        <a th:href="@{/product/{id}(id=${product.id})}">Детальніше...</a>
     </div>
+<!--якщо не пустий-->
+    <div th:unless="${productList.isEmpty}">
+        <div th:each="product:${productList}">
+            <span th:text="${product.title}"></span>
+            <span th:text="${product.price}"></span><b> грн.</b>
+            <a th:href="@{/product/{id}(id=${product.id})}">Детальніше...</a>
+        </div>
+    </div>
+
     <br><hr>
 <!--    створення форми для нового товару-->
-    <form th:action="@{/product/create}" method="post" enctype="multipart/form-data">
-        Назва товару: <input type="text" name="title"><br><br>
-        Опис товару: <input type="text" name="description"><br><br>
-        Ціна товару: <input type="number" name="price"><br><br>
-        Місто: <input type="text" name="town"><br><br>
-        Автор: <input type="text" name="author"><br><br><br>
-        фото 1: <input type="file" name="file1"><br>
-        фото 2: <input type="file" name="file2"><br>
-        фото 3: <input type="file" name="file3"><br>
-        <input type="submit" value="Додати товар">
-    </form>
-
+    <div th:if="${user.email}">
+        <form th:action="@{/product/create}" method="post" enctype="multipart/form-data">
+            Назва товару: <input type="text" name="title"><br><br>
+            Опис товару: <input type="text" name="description"><br><br>
+            Ціна товару: <input type="number" name="price"><br><br>
+            Місто: <input type="text" name="town"><br><br>
+            фото 1: <input type="file" name="file1"><br>
+            фото 2: <input type="file" name="file2"><br>
+            фото 3: <input type="file" name="file3"><br>
+            <input type="submit" value="Додати товар">
+        </form>
+    </div>
 </body>
 </html>

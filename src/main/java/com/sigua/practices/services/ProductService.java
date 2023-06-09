@@ -2,7 +2,9 @@ package com.sigua.practices.services;
 
 import com.sigua.practices.model.Image;
 import com.sigua.practices.model.Product;
+import com.sigua.practices.model.User;
 import com.sigua.practices.repositories.ProductRepository;
+import com.sigua.practices.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
@@ -11,19 +13,22 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
     public List<Product> getProductList(String title) {
         if (title == null || title.equals(""))
         return productRepository.findAll();
         return productRepository.findByTitle(title);
     }
-    public void saveProduct(Product product, MultipartFile file1,MultipartFile file2,MultipartFile file3 ){
+    public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3 ){
+        product.setUser(getUserByPrincipal (principal));
         Image image1;
         Image image2;
         Image image3;
@@ -50,6 +55,11 @@ public class ProductService {
         Product productFromDb = productRepository.save(product);
         productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());
         productRepository.save(product);
+    }
+
+    public User getUserByPrincipal(Principal principal) {
+            if (principal == null) return new User();
+        return userRepository.findByEmail(principal.getName());
     }
 
     //Convert image 2 Multipartfile
