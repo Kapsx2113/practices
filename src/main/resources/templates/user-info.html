@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Практика 3ІПЗ-20</title>
+</head>
+<body>
+<h1> Вітаю на практиці </h1><hr>
+<h4> Інформація про користувача <i> [[${user.name}]]</i> </h4>
+<b> Телефон </b> [[${user.numberPhone}]]<br>
+<b> Email </b> [[${user.email}]]<br>
+
+<h4> Товари користувача <i> [[${user.name}]]</i></h4>
+
+<!--  якщо список пустий (товар)  -->
+<div th:if="${products.isEmpty}">
+    <div> <h3> Товар відсутній </h3> </div>
+
+</div>
+<!--якщо не пустий-->
+<div th:unless="${products.isEmpty}">
+    <div th:each="product:${products}">
+        <span th:text="${product.title}"></span>
+        <span th:text="${product.price}"></span><b> грн.</b>
+        <a th:href="@{/product/{id}(id=${product.id})}">Детальніше...</a>
+    </div>
+</div>
+
+</body>
+</html>
