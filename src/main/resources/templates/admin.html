@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Практика 3ІПЗ-20</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+        body {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        table {
+            color: #fff;
+        }
+
+        th {
+            background-color: #212529;
+            border-color: #fff;
+        }
+
+        td {
+            border-color: #fff;
+        }
+
+        a {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<h1>Вітаю на практиці</h1>
+<hr>
+<h4>Панель адміністратора</h4>
+
+<table class="table table-dark table-bordered">
+  <thead>
+  <tr>
+    <th>Email</th>
+    <th>Телефон</th>
+    <th>Активний</th>
+    <th>Роль</th>
+    <th>Бан</th>
+    <th>Детальніше</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user : ${users}">
+    <td th:text="${user.email}"></td>
+    <td th:text="${user.numberPhone}"></td>
+    <td th:text="${user.active} ? 'ACTIVE' : 'RETIRED'"></td>
+    <td th:text="${user.roles}"></td>
+    <td>
+      <form th:action="@{/admin/user/ban/{id}(id=${user.id})}" method="post">
+        <input type="submit" class="btn btn-danger" value="Бан">
+      </form>
+    </td>
+    <td><a th:href="@{/user/{id}(id=${user.id})}">детально</a></td>
+  </tr>
+  </tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

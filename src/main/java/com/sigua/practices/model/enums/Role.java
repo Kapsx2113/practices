@@ -1,4 +1,4 @@
-package com.sigua.practices.model;
+package com.sigua.practices.model.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 

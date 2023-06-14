@@ -1,7 +1,7 @@
 package com.sigua.practices.controller;
 
 import com.sigua.practices.model.User;
-import com.sigua.practices.services.UserSrevice;
+import com.sigua.practices.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
     @Controller
     @RequiredArgsConstructor
     public class UserContoller {
-      private final UserSrevice userSrevice;
+      private final UserService userService;
     @GetMapping("/login")
     public String login(){
     return "login";
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
     }
     @PostMapping("/registration")
     public String createUser(User user){
-        userSrevice.createUsers(user);
+        userService.createUsers(user);
         return "redirect:/login";
     }
         @GetMapping("/user/{user}")

@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.sigua.practices.model.Role;
+import com.sigua.practices.model.enums.Role;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -43,6 +43,11 @@ public class User implements UserDetails {
     private void init(){
         dateOfCreate = LocalDateTime.now();
     }
+
+
+public boolean isAdmin(){
+        return roles.contains(Role.ROLE_ADMIN);
+}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

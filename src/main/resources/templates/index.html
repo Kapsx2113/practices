@@ -2,58 +2,138 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="/noImage.png" />
+    <style>
+        body {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+
+        .form-control {
+            background-color: #4d5259;
+            border-color: #4d5259;
+            color: #fff;
+        }
+
+        .rainbow-text {
+            background-image: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: rainbowAnimation 5s linear infinite;
+        }
+
+        @keyframes rainbowAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+    </style>
     <title>Title</title>
 </head>
 <body>
-
-    <h1>Вітаю на практиці!</h1><hr><br>
+<div class="container">
+    <h1 class="mt-4">
+        Вітаю в <span class="rainbow-text">МИКОЛФІ!</span>
+    </h1>
+    <hr>
+    <br>
 
     <div th:if="${user.email}">
         <form action="/logout" method="post">
-            <input type="submit" value="Вийти">
+            <input type="submit" class="btn btn-primary" value="Вийти">
         </form>
-
     </div>
     <div th:unless="${user.email}">
-        <a href="/login"> Увійти</a>
+        <a href="/login" class="btn btn-primary">Увійти</a>
     </div>
 
     <hr>
 
-    <a href="/login">Увійти</a>
-
-    <form th:action="@{/}" method="get">
-        Пошук товару по назві: <input type="text" name="title">
-        <input type="submit" value="Пошук">
-    </form>
-<hr>
-<!--  якщо список пустий (товар)  -->
-    <div th:if="${productList.isEmpty}">
-        <div> <h3> Товар відсутній </h3> </div>
-
+    <div th:if="${user.isAdmin}">
+        <a href="/admin" class="btn btn-primary">Панель адміністратора</a>
     </div>
-<!--якщо не пустий-->
-    <div th:unless="${productList.isEmpty}">
-        <div th:each="product:${productList}">
-            <span th:text="${product.title}"></span>
-            <span th:text="${product.price}"></span><b> грн.</b>
-            <a th:href="@{/product/{id}(id=${product.id})}">Детальніше...</a>
+
+    <form th:action="@{/}" method="get" class="mt-4">
+        <div class="input-group">
+            <input type="text" class="form-control" name="title" placeholder="Пошук товару по назві">
+            <button type="submit" class="btn btn-primary">Пошук</button>
+        </div>
+    </form>
+    <hr>
+
+    <div th:if="${productList.isEmpty}">
+        <div>
+            <h3>Товар відсутній</h3>
         </div>
     </div>
 
-    <br><hr>
-<!--    створення форми для нового товару-->
+    <div th:unless="${productList.isEmpty}">
+        <div th:each="product:${productList}" class="mt-4">
+            <span th:text="${product.title}"></span>
+            <span th:text="${product.price}"></span><b> грн.</b>
+            <a th:href="@{/product/{id}(id=${product.id})}" class="btn btn-primary">Детальніше...</a>
+        </div>
+    </div>
+
+    <br>
+    <hr>
+
     <div th:if="${user.email}">
-        <form th:action="@{/product/create}" method="post" enctype="multipart/form-data">
-            Назва товару: <input type="text" name="title"><br><br>
-            Опис товару: <input type="text" name="description"><br><br>
-            Ціна товару: <input type="number" name="price"><br><br>
-            Місто: <input type="text" name="town"><br><br>
-            фото 1: <input type="file" name="file1"><br>
-            фото 2: <input type="file" name="file2"><br>
-            фото 3: <input type="file" name="file3"><br>
-            <input type="submit" value="Додати товар">
+        <form th:action="@{/product/create}" method="post" enctype="multipart/form-data" class="mt-4">
+            <div class="mb-3">
+                <label for="title" class="form-label">Назва товару:</label>
+                <input type="text" class="form-control" id="title" name="title">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Опис товару:</label>
+                <input type="text" class="form-control" id="description" name="description">
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Ціна товару:</label>
+                <input type="number" class="form-control" id="price" name="price">
+            </div>
+            <div class="mb-3">
+                <label for="town" class="form-label">Місто:</label>
+                <input type="text" class="form-control" id="town" name="town">
+            </div>
+            <div class="mb-3">
+                <label for="file1" class="form-label">фото 1:</label>
+                <input type="file" class="form-control" id="file1" name="file1">
+            </div>
+            <div class="mb-3">
+                <label for="file2" class="form-label">фото 2:</label>
+                <input type="file" class="form-control" id="file2" name="file2">
+            </div>
+            <div class="mb-3">
+                <label for="file3" class="form-label">фото 3:</label>
+                <input type="file" class="form-control" id="file3" name="file3">
+            </div>
+            <button type="submit" class="btn btn-primary">Додати товар</button>
         </form>
     </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>
