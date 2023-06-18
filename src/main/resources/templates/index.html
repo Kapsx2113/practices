@@ -89,6 +89,7 @@
     </div>
 
     <div th:unless="${productList.isEmpty}">
+
         <div th:each="product:${productList}" class="mt-4">
             <span th:text="${product.title}"></span>
             <span th:text="${product.price}"></span><b> грн.</b>

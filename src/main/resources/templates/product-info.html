@@ -13,6 +13,9 @@
         .carousel-item img {
             height: 200px;
             object-fit: cover;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
@@ -40,7 +43,7 @@
 <b>Місто:</b> [[${product.town}]] <br>
 <b>Автор:</b> <a th:href="@{/user/{id}(id=${product.user.id})}">[[${product.user.name}]]</a> <br> <br>
 
-<div th:if="${user.email}">
+<div th:if="${user.email == product.user.email}">
     <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post">
         <input type="submit" value="Видалити товар">
     </form>

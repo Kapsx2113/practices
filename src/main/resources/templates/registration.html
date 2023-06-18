@@ -34,25 +34,25 @@
     </style>
 </head>
 <body>
-<h1> Спершу заєреструйтеся </h1>
+<h1> Спершу зареєструйтеся </h1>
 <hr>
 <h4> Реєстрація</h4>
 <form action="/registration" method="post">
     <div class="mb-3">
         <label for="name" class="form-label">Ім'я продавця:</label>
-        <input type="text" class="form-control" id="name" name="name">
+        <input type="text" class="form-control" id="name" name="name" required>
     </div>
     <div class="mb-3">
         <label for="email" class="form-label">E-mail:</label>
-        <input type="email" class="form-control" id="email" name="email">
+        <input type="email" class="form-control" id="email" name="email" required>
     </div>
     <div class="mb-3">
         <label for="numberPhone" class="form-label">Номер телефону:</label>
-        <input type="text" class="form-control" id="numberPhone" name="numberPhone">
+        <input type="text" class="form-control" id="numberPhone" name="numberPhone" required>
     </div>
     <div class="mb-3">
         <label for="password" class="form-label">Пароль:</label>
-        <input type="password" class="form-control" id="password" name="password">
+        <input type="password" class="form-control" id="password" name="password" required>
     </div>
     <!--    <input type="hidden" name="$_csrf." value="${_csrf.token}"/>-->
     <button type="submit" class="btn btn-primary">Зареєструватися</button>
